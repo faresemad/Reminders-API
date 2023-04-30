@@ -27,9 +27,26 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party Apps
     'rest_framework',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     # Local Apps
     'reminder',
 ]
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Reminder API',
+    'DESCRIPTION': 'Reminders are notifications or prompts to remember important tasks, appointments, events, or deadlines at a specified time and date.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

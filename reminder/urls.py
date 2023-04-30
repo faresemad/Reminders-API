@@ -1,9 +1,10 @@
-from django.urls import path
+from rest_framework_nested.routers import NestedDefaultRouter, DefaultRouter
 from .views import ReminderViewSet, CategoryViewSet
 
-urlpatterns = [
-    path('reminders/', ReminderViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('reminders/<int:pk>/', ReminderViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
-    path('categories/', CategoryViewSet.as_view({'get': 'list', 'post': 'create'})),
-    path('categories/<int:pk>/', CategoryViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
-]
+router = DefaultRouter()
+router.register(r'list', CategoryViewSet, basename='list')
+
+reminder_router = NestedDefaultRouter(router, r'list', lookup='list')
+reminder_router.register(r'reminder', ReminderViewSet, basename='reminder')
+
+urlpatterns = router.urls + reminder_router.urls
